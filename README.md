@@ -10,10 +10,6 @@ cd dotfiles
 chmod +x install.sh
 ./install.sh
 ```
-# or
-```bash
-curl -fsSL https://raw.githubusercontent.com/belowzeroiq/dotfiles/main/install.sh | bash
-```
 
 Reboot and select Hyprland from your display manager.
 
@@ -57,27 +53,9 @@ Reboot and select Hyprland from your display manager.
 | `Super + R` | Resize mode |
 | `Super + Mouse` | Move/resize window |
 
-## 📁 Structure
-
-```
-~/.config/hypr/
-├── hyprland.conf       # Main config
-├── hyprlock.conf       # Lock screen
-├── aliases.sh          # Aliases
-└── configs/            # Split configs
-    ├── keybindings.conf
-    ├── animations.conf
-    └── ...
-```
-
 ## 💻 Preview
 
 ![20250710_15h00m59s_grim](https://github.com/user-attachments/assets/cf5c42d7-f263-4f7f-b00b-df5dd07bcc82)
-
-## 🎯 Tips
-
-- Add wallpapers to `~/Wallpapers/wallpaper.jpg`
-- Reload config: `hypr-reload`
 
 ## 📝 Credits
 
