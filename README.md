@@ -5,8 +5,8 @@ Personal Hyprland configuration for Arch Linux with smooth animations and produc
 ## 🚀 Installation
 
 ```bash
-git clone <repo-url>
-cd <repo-name>
+git clone --depth 1 https://github.com/belowzeroiq/dotfiles ~/dotfiles
+cd dotfiles
 chmod +x install.sh
 ./install.sh
 ```
