@@ -12,7 +12,7 @@ chmod +x install.sh
 ```
 # or
 ```bash
-curl -fsSL https://raw.githubusercontent.com/username/repo/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/belowzeroiq/dotfiles/main/install.sh | bash
 ```
 
 Reboot and select Hyprland from your display manager.
