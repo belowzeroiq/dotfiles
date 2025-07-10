@@ -65,7 +65,7 @@ sudo pacman -S --noconfirm \
 print_status "Installing Wayland utilities..."
 sudo pacman -S --noconfirm \
     waybar \
-    wofi \
+    rofi \
     dunst \
     grim \
     slurp \
@@ -126,7 +126,8 @@ yay -S --noconfirm \
     ttf-cascadia-code \
     ttf-jetbrains-mono-nerd \
     ttf-fira-code-nerd \
-    ttf-cascadia-code-nerd
+    ttf-cascadia-code-nerd \
+    rofi-power-menu
 
 # Create necessary directories
 print_status "Creating configuration directories..."

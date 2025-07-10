@@ -102,7 +102,7 @@
 
     "custom/power": {
         "format": "",
-        "on-click": "~/.config/waybar/scripts/powermenu.sh",
+        "on-click": "~/.config/waybar/scripts/rofi-power-menu.sh",
         "tooltip": false
     },
 
