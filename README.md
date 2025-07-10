@@ -5,10 +5,14 @@ Personal Hyprland configuration for Arch Linux with smooth animations and produc
 ## 🚀 Installation
 
 ```bash
-git clone <repo-url>
-cd <repo-name>
+git clone --depth 1 https://github.com/belowzeroiq/dotfiles ~/dotfiles
+cd dotfiles
 chmod +x install.sh
 ./install.sh
+```
+# or
+```bash
+curl -fsSL https://raw.githubusercontent.com/username/repo/main/install.sh | bash
 ```
 
 Reboot and select Hyprland from your display manager.
@@ -65,6 +69,10 @@ Reboot and select Hyprland from your display manager.
     ├── animations.conf
     └── ...
 ```
+
+## 💻 Preview
+
+![20250710_15h00m59s_grim](https://github.com/user-attachments/assets/cf5c42d7-f263-4f7f-b00b-df5dd07bcc82)
 
 ## 🎯 Tips
 
