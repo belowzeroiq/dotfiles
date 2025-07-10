@@ -1,0 +1,112 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 0,
+    "width":  0,
+    "spacing": 0,
+    "margin-top": 6,
+    "margin-left": 6,
+    "margin-right": 6,
+    "modules-left": ["hyprland/workspaces", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", "custom/nightlight", "bluetooth", "pulseaudio", "custom/power"],
+
+"hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "format": "{icon}",
+    "format-icons": {
+        "default": " ",
+        "active": " ",
+        "urgent": " "
+    },
+    "persistent-workspaces": {
+    "*": 3
+    }
+},
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 50,
+        "separate-outputs": true
+    },
+
+    "clock": {
+        "format": "{:%H:%M}",
+        "format-alt": "{:%Y-%m-%d %H:%M:%S}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "custom/nightlight": {
+        "format": "{}",
+        "exec": "~/.config/waybar/scripts/nightlight.sh",
+        "return-type": "json",
+        "interval": 5,
+        "on-click": "~/.config/waybar/scripts/toggle-nightlight.sh",
+        "signal": 9
+    },
+
+    "bluetooth": {
+        "format": "{icon}",
+        "format-icons": {
+            "enabled": "󰂯 On",
+            "disabled": "󰂲 Off",
+            "connected": "󰂰 Connected"
+        },
+        "tooltip-format": "{status}\n{num_connections} connected",
+        "on-click": "blueman-manager",
+        "on-click-right": "rfkill toggle bluetooth && pkill -RTMIN+8 waybar",
+    },
+
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰂄 {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+
+    "network": {
+        "format-wifi": "󰤨 {signalStrength}%",
+        "format-ethernet": "󰈀 Connected",
+        "format-linked": "󰈀 {ifname} (No IP)",
+        "format-disconnected": "󰤭 Disconnected",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "tooltip-format": "{ifname} via {gwaddr} 󰊗",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) 󰤨",
+        "tooltip-format-ethernet": "{ifname} 󰈀",
+        "tooltip-format-disconnected": "Disconnected",
+        "max-length": 50
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 Muted",
+        "format-icons": {
+            "headphone": "󰋋",         // Headphone icon
+            "hands-free": "󰋎",       // Hands-free headset
+            "headset": "󰋎",          // Headset icon
+            "phone": "󰏲",            // Phone icon
+            "portable": "󰓃",         // Portable speaker
+            "car": "󰄛",              // Car audio
+            "default": ["", "", ""]  // Volume levels: low, medium, high
+        },
+        "on-click": "pavucontrol",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+    },
+
+    "custom/power": {
+        "format": "",
+        "on-click": "~/.config/waybar/scripts/powermenu.sh",
+        "tooltip": false
+    },
+
+    "tray": {
+        "spacing": 10
+    }
+}

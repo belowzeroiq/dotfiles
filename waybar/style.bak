@@ -1,0 +1,213 @@
+/* Waybar Style - Tokyo Night Theme */
+/* Save as ~/.config/waybar/style.css */
+
+* {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+window#waybar {
+    /*background: rgba(36, 40, 59, 0.95);*/
+    background: transparent;
+    border-radius: 18px;
+    /*border: 0px solid rgba(125, 196, 228, 0.3);*/
+    /*-webkit-backdrop-filter: blur(10px);*/
+}
+
+/* Workspaces - GNOME 48 Style with Working Animations */
+#workspaces {
+background: transparent;
+margin: 6px;
+padding: 6px;
+}
+
+#workspaces button {
+min-width: 18px;
+min-height: 6px;
+background: #2c3c57;
+border-radius: 50%; /* perfect circle */
+margin: 0 3px;
+padding: 0;
+transition: all 0.3s ease;
+}
+
+#workspaces button.active {
+background: #4A628A;
+min-width: 48px; /* long pill shape */
+min-height: 6px;
+border-radius: 50px; /* stretch like a rounded line */
+animation: active-pulse 2s infinite;
+}
+
+/* Keyframes must be perfectly formatted */
+@keyframes active-pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.8; }
+    100% { opacity: 1; }
+}
+
+@keyframes urgent-blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    51% { opacity: 0.5; }
+    100% { opacity: 0.5; }
+}
+
+/* Alternative shake effect using margins since transform isn't supported */
+@keyframes urgent-shake {
+    0% { margin-left: 3px; margin-right: 3px; }
+    25% { margin-left: 1px; margin-right: 5px; }
+    75% { margin-left: 5px; margin-right: 1px; }
+    100% { margin-left: 3px; margin-right: 3px; }
+}
+
+/* Window title */
+#window {
+color: #b3cfff;
+border-radius: 12px;
+padding: 4px 12px;
+margin: 4px;
+font-weight: 500;
+}
+
+/* Clock */
+#clock {
+color: #ffffff;
+border-radius: 18px;
+padding: 4px 16px;
+margin: 4px;
+font-weight: 700;
+font-size: 14px;
+}
+
+.modules-right {
+    padding: 0 6px;  /* Adds padding to the right side container */
+    margin-right: 6px;  /* Alternative: use margin instead */
+}
+
+/* Right modules */
+#pulseaudio,
+#bluetooth,
+#network,
+#cpu,
+#memory,
+#battery,
+#custom-power,
+#custom-nightlight,
+#tray {
+background: rgba(68, 71, 90, 0.8);
+color: #c0caf5;
+border-radius: 18px;
+padding: 6px 12px;
+margin: 6px 3px;
+transition: all 0.3s ease;
+}
+
+#pulseaudio:hover,
+#network:hover,
+#cpu:hover,
+#memory:hover,
+#battery:hover {
+background: rgba(122, 162, 247, 0.2);
+}
+
+/* Specific module colors */
+#pulseaudio {
+color: #ffffff;
+}
+
+#bluetooth {
+color: #ffffff;
+padding: 0 8px;
+border-radius: 6px;
+}
+
+#bluetooth.disabled {
+color: #ffffff;
+animation: urgent-blink 2s infinite;
+}
+
+#bluetooth.connected {
+color: #ffffff;
+}
+
+#custom-nightlight {
+padding: 0 8px;
+border-radius: 6px;
+}
+
+#custom-nightlight.enabled {
+color: #e0af68;
+}
+
+#custom-nightlight.disabled {
+color: #565f89;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+#custom-power{
+background-color: #4A628A;
+color:  #ffffff;
+}
+
+#network {
+color: #9ece6a;
+}
+
+#cpu {
+color: #ff9e64;
+}
+
+#memory {
+color: #bb9af7;
+}
+
+#battery {
+color: #7dcfff;
+}
+
+#battery.charging {
+color: #9ece6a;
+}
+
+#battery.warning {
+color: #e0af68;
+}
+
+#battery.critical {
+color: #f7768e;
+}
+
+/* Tray */
+#tray {
+background: rgba(68, 71, 90, 0.8);
+}
+
+#tray > .passive {
+-gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+-gtk-icon-effect: highlight;
+background-color: #f7768e;
+}
+
+/* Tooltips */
+tooltip {
+    background: rgba(36, 40, 59, 0.95);
+    color: #c0caf5;
+    border: 1px solid rgba(125, 196, 228, 0.3);
+    border-radius: 8px;
+    padding: 8px;
+}

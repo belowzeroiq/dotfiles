@@ -1,0 +1,202 @@
+* {
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+window#waybar {
+    background: transparent;
+    border-radius: 18px;
+}
+
+/* Workspaces - GNOME 48 Style */
+#workspaces {
+/*background: #1a1b26;*/
+background: #ffffff;
+margin: 16px;
+padding: 6px 8px;
+border-radius: 18px;
+}
+
+#workspaces button {
+min-width: 18px;
+min-height: 6px;
+background: #4a5568; /* Muted blue-gray */
+border-radius: 50%;
+margin: 3px;
+padding: 0;
+transition: all 0.3s ease;
+}
+
+#workspaces button.active {
+background: #8b7cf8; /* bright blue-purple */
+min-width: 48px;
+min-height: 6px;
+border-radius: 50px;
+}
+
+/* Keyframes must be perfectly formatted */
+@keyframes urgent-blink {
+    0% { opacity: 1; }
+    50% { opacity: 1; }
+    51% { opacity: 0.5; }
+    100% { opacity: 0.5; }
+}
+
+@keyframes urgent-shake {
+    0% { margin-left: 3px; margin-right: 3px; }
+    25% { margin-left: 1px; margin-right: 5px; }
+    75% { margin-left: 5px; margin-right: 1px; }
+    100% { margin-left: 3px; margin-right: 3px; }
+}
+
+/* Window title */
+#window {
+/* color: #8b7cf8; */
+color: #1a1b26;
+background: #ffffff;
+border-radius: 18px;
+padding: 6px 16px;
+margin: 16.5px;
+font-weight: 700;
+}
+
+#window.inactive {
+    background: transparent;
+}
+
+/* Clock */
+#clock {
+/* color: #8b7cf8; */
+color: #1a1b26;
+background: #ffffff;
+border-radius: 18px;
+padding: 4px 16px;
+margin: 16px;
+font-weight: 700;
+font-size: 14px;
+}
+
+.modules-right {
+    padding: 0 6px;
+    margin-right: 6px;
+}
+
+/* Right modules */
+#pulseaudio,
+#bluetooth,
+#network,
+#battery,
+#custom-power,
+#custom-nightlight,
+#custom-theme,
+#tray {
+/* background: #1a1b26; */
+background: #ffffff;
+color: #1a1b26;
+border-radius: 18px;
+padding: 6px 12px;
+margin: 16px 3px;
+transition: all 0.3s ease;
+}
+
+#pulseaudio:hover,
+#network:hover,
+#battery:hover {
+/* background: #2d3748; */
+}
+
+/* Specific module colors - different shades of blue-purple */
+#pulseaudio {
+/* color: #8b7cf8; */
+}
+
+#bluetooth {
+/* color: #8b7cf8; */
+padding: 0 8px;
+}
+
+#bluetooth.disabled {
+/* color: #4a5568; */
+animation: urgent-blink 2s infinite;
+}
+
+#bluetooth.connected {
+/* color: #8b7cf8; */
+}
+
+#custom-nightlight {
+border-radius: 18px;
+}
+
+#custom-nightlight.enabled {
+/* color: #c7d2fe; */
+}
+
+#custom-nightlight.disabled {
+/* color: #4a5568; */
+}
+
+#custom-theme {
+border-radius: 18px;
+}
+
+#custom-power {
+background: #ffffff;
+color: #4a5568;
+font-weight: 900;
+}
+
+#network {
+/* color: #93c5fd; */
+}
+
+#network.disconnected {
+/* color: #64748b; */
+}
+
+#battery {
+/* color: #7c3aed; */
+}
+
+#battery.charging {
+/* color: #10b981; */
+}
+
+#battery.warning {
+/* color: #f59e0b; */
+}
+
+#battery.critical {
+color: #ef4444; /* red accent for critical */
+animation: urgent-blink 1s infinite;
+}
+
+/* Tray */
+#tray {
+background: #ffffff;
+border-radius: 18px;
+}
+
+#tray > .passive {
+-gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+-gtk-icon-effect: highlight;
+background-color: #6366f1;
+}
+
+/* Tooltips */
+tooltip {
+    background: #1a1b26; /* dark blue-purple base */
+    color: #e2e8f0; /* light blue-purple text */
+    border: 1px solid #4a5568; /* muted blue-purple border */
+    border-radius: 8px;
+    padding: 8px;
+}
