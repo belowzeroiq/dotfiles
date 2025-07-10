@@ -131,7 +131,6 @@ yay -S --noconfirm \
 # Create necessary directories
 print_status "Creating configuration directories..."
 mkdir -p ~/.config
-mkdir -p ~/Pictures
 mkdir -p ~/Wallpaper
 
 # Copy Hyprland configuration files
