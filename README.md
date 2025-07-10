@@ -10,6 +10,10 @@ cd dotfiles
 chmod +x install.sh
 ./install.sh
 ```
+# or
+```bash
+curl -fsSL https://raw.githubusercontent.com/username/repo/main/install.sh | bash
+```
 
 Reboot and select Hyprland from your display manager.
 
