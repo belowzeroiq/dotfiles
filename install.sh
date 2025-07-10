@@ -122,7 +122,11 @@ print_status "Installing AUR packages..."
 yay -S --noconfirm \
     hyprshot \
     wlogout \
-    swww
+    swww    \
+    ttf-cascadia-code \
+    ttf-jetbrains-mono-nerd \
+    ttf-fira-code-nerd \
+    ttf-cascadia-code-nerd
 
 # Create necessary directories
 print_status "Creating configuration directories..."
