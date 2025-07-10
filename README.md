@@ -66,6 +66,10 @@ Reboot and select Hyprland from your display manager.
     └── ...
 ```
 
+## 💻 Preview
+
+![20250710_15h00m59s_grim](https://github.com/user-attachments/assets/cf5c42d7-f263-4f7f-b00b-df5dd07bcc82)
+
 ## 🎯 Tips
 
 - Add wallpapers to `~/Wallpapers/wallpaper.jpg`
