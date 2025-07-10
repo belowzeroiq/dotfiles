@@ -93,7 +93,8 @@ sudo pacman -S --noconfirm \
     gtk4 \
     nautilus \
     nautilus-open-any-terminal \
-    gvfs-mtp
+    gvfs-mtp \
+    gnome-keyring
 
 # Install fonts for aesthetics
 print_status "Installing fonts..."
