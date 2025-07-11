@@ -35,16 +35,13 @@ Reboot and select Hyprland from your display manager.
 ### Screenshots
 | Key | Action |
 |---|---|
-| `Print` | Full screen |
-| `Shift + Print` | Window |
-| `Super + Print` | Region |
+| `Super S` | Full screen |
 
 ### Workspaces
 | Key | Action |
 |---|---|
 | `Super + 1-9` | Switch workspace |
 | `Super + Shift + 1-9` | Move window to workspace |
-| `Super + S` | Special workspace |
 
 ### Window Management
 | Key | Action |
