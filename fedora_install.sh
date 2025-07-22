@@ -207,33 +207,82 @@ sudo $DNF_CMD install -y --skip-unavailable \
     rsync \
     tree \
     htop \
-    neofetch \
-    ffmpeg \
     mpv
+
+# Handle ffmpeg conflict by replacing ffmpeg-free with full ffmpeg from RPM Fusion
+print_status "Installing ffmpeg (replacing ffmpeg-free)..."
+if sudo $DNF_CMD install -y --allowerasing ffmpeg 2>/dev/null; then
+    print_status "Successfully installed full ffmpeg from RPM Fusion"
+else
+    print_warning "Could not install full ffmpeg, keeping ffmpeg-free"
+fi
+
+# Install neofetch alternative (fastfetch)
+print_status "Installing system info tool..."
+if ! sudo $DNF_CMD install -y fastfetch 2>/dev/null; then
+    print_warning "fastfetch not available, you can install it manually later"
+    print_warning "Alternative: install neofetch from Flatpak or build from source"
+fi
 
 # Install Go if needed for cliphist
 print_status "Installing Go for additional tools..."
 sudo $DNF_CMD install -y golang
 
-# Clone and build hyprshot (screenshot tool)
+# Clone and install hyprshot (screenshot tool)
 print_status "Installing hyprshot..."
 if [ ! -d /tmp/hyprshot ]; then
     git clone https://github.com/Gustash/hyprshot.git /tmp/hyprshot
-    cd /tmp/hyprshot
-    make install
-    cd -
 fi
+cd /tmp/hyprshot
+# Check if hyprshot is already installed
+if ! command -v hyprshot &> /dev/null; then
+    # Install hyprshot manually since it doesn't have a make install target
+    sudo cp hyprshot /usr/local/bin/
+    sudo chmod +x /usr/local/bin/hyprshot
+    print_status "hyprshot installed to /usr/local/bin/"
+else
+    print_status "hyprshot already installed"
+fi
+cd -
 
 # Clone and build wlogout
+print_status "Installing wlogout dependencies..."
+sudo $DNF_CMD install -y --skip-unavailable \
+    gtk3-devel \
+    gtk-layer-shell-devel \
+    scdoc \
+    json-glib-devel
+
 print_status "Installing wlogout..."
 if [ ! -d /tmp/wlogout ]; then
     git clone https://github.com/ArtsyMacaw/wlogout.git /tmp/wlogout
-    cd /tmp/wlogout
-    meson build
-    ninja -C build
-    sudo ninja -C build install
-    cd -
 fi
+cd /tmp/wlogout
+
+# Check if wlogout is already installed
+if ! command -v wlogout &> /dev/null; then
+    # Clean any previous build
+    rm -rf build 2>/dev/null || true
+    
+    # Use proper meson setup command
+    if meson setup build; then
+        if ninja -C build; then
+            sudo ninja -C build install
+            print_status "wlogout installed successfully"
+        else
+            print_warning "wlogout build failed, skipping..."
+        fi
+    else
+        print_warning "wlogout configuration failed, trying alternative installation..."
+        # Try installing from COPR if available
+        if sudo $DNF_CMD copr enable -y alebastr/sway-extras 2>/dev/null; then
+            sudo $DNF_CMD install -y wlogout 2>/dev/null || print_warning "Could not install wlogout from COPR"
+        fi
+    fi
+else
+    print_status "wlogout already installed"
+fi
+cd -
 
 # Clone and build swww (wallpaper daemon)
 print_status "Installing swww..."
