@@ -126,7 +126,7 @@ fi
 
 # Install Hyprland and essential packages
 print_status "Installing Hyprland and core components..."
-sudo $DNF_CMD install -y \
+sudo $DNF_CMD install -y --skip-unavailable \
     hyprland \
     hyprlock \
     hypridle \
@@ -134,12 +134,21 @@ sudo $DNF_CMD install -y \
     xdg-desktop-portal-gtk \
     qt5-qtwayland \
     qt6-qtwayland \
-    polkit-kde \
-    polkit-gnome
+    polkit-kde
+
+# Try to install polkit-gnome, fallback to alternatives if not available
+print_status "Installing polkit authentication agent..."
+if ! sudo $DNF_CMD install -y polkit-gnome 2>/dev/null; then
+    print_warning "polkit-gnome not available, trying alternatives..."
+    sudo $DNF_CMD install -y --skip-unavailable \
+        polkit-kde \
+        polkit \
+        polkit-devel || print_warning "Some polkit packages may not be available"
+fi
 
 # Install additional Wayland utilities
 print_status "Installing Wayland utilities..."
-sudo $DNF_CMD install -y \
+sudo $DNF_CMD install -y --skip-unavailable \
     waybar \
     rofi-wayland \
     dunst \
@@ -159,7 +168,7 @@ sudo $DNF_CMD install -y \
 
 # Install terminal and file manager
 print_status "Installing terminal and utilities..."
-sudo $DNF_CMD install -y \
+sudo $DNF_CMD install -y --skip-unavailable \
     kitty \
     thunar \
     thunar-archive-plugin \
@@ -172,7 +181,7 @@ sudo $DNF_CMD install -y \
 
 # Install fonts for aesthetics
 print_status "Installing fonts..."
-sudo $DNF_CMD install -y \
+sudo $DNF_CMD install -y --skip-unavailable \
     fontawesome-fonts \
     fira-code-fonts \
     jetbrains-mono-fonts \
@@ -189,7 +198,7 @@ flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flat
 
 # Install additional tools from repositories
 print_status "Installing additional utilities..."
-sudo $DNF_CMD install -y \
+sudo $DNF_CMD install -y --skip-unavailable \
     ImageMagick \
     jq \
     curl \
