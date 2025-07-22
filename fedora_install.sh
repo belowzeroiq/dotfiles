@@ -1,5 +1,5 @@
 #!/bin/bash
-# Hyprland Installation Script for Fedora Linux
+# Hyprland Installation Script for Fedora Linux (DNF5 Compatible)
 # Run this script as your regular user (not root)
 
 set -e
@@ -32,6 +32,19 @@ if [[ $EUID -eq 0 ]]; then
    exit 1
 fi
 
+# Detect DNF version
+DNF_CMD="dnf"
+if command -v dnf5 &> /dev/null; then
+    DNF_CMD="dnf5"
+    print_status "Detected DNF5, using compatible commands"
+elif command -v dnf &> /dev/null; then
+    DNF_CMD="dnf"
+    print_status "Using traditional DNF"
+else
+    print_error "Neither dnf nor dnf5 found!"
+    exit 1
+fi
+
 # Check if config directory exists
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 HYPR_CONFIG_DIR="$SCRIPT_DIR/hypr"
@@ -47,41 +60,73 @@ fi
 
 # Update system
 print_status "Updating system packages..."
-sudo dnf update -y
+sudo $DNF_CMD upgrade -y
 
 # Enable RPM Fusion repositories
 print_status "Enabling RPM Fusion repositories..."
-sudo dnf install -y \
+sudo $DNF_CMD install -y \
     https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
     https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # Enable COPR repositories for Hyprland
 print_status "Enabling COPR repositories..."
-sudo dnf copr enable -y solopasha/hyprland
-sudo dnf copr enable -y erikreider/SwayNotificationCenter
+sudo $DNF_CMD copr enable -y solopasha/hyprland
+sudo $DNF_CMD copr enable -y erikreider/SwayNotificationCenter
 
-# Install development tools
+# Install development tools - DNF5 compatible way
 print_status "Installing development tools..."
-sudo dnf groupinstall -y "Development Tools" "C Development Tools and Libraries"
-sudo dnf install -y \
-    git \
-    cmake \
-    meson \
-    ninja-build \
-    pkgconfig \
-    gcc-c++ \
-    wayland-devel \
-    wayland-protocols-devel \
-    libdrm-devel \
-    libxkbcommon-devel \
-    libinput-devel \
-    pixman-devel \
-    cairo-devel \
-    pango-devel
+if [ "$DNF_CMD" = "dnf5" ]; then
+    # For DNF5, install group management plugin and individual packages
+    sudo $DNF_CMD install -y dnf5-plugins
+    # Install individual development packages instead of groups
+    sudo $DNF_CMD install -y \
+        gcc \
+        gcc-c++ \
+        make \
+        autoconf \
+        automake \
+        libtool \
+        flex \
+        bison \
+        kernel-devel \
+        kernel-headers \
+        glibc-devel \
+        git \
+        cmake \
+        meson \
+        ninja-build \
+        pkgconfig \
+        wayland-devel \
+        wayland-protocols-devel \
+        libdrm-devel \
+        libxkbcommon-devel \
+        libinput-devel \
+        pixman-devel \
+        cairo-devel \
+        pango-devel
+else
+    # Traditional DNF with group install
+    sudo $DNF_CMD groupinstall -y "Development Tools" "C Development Tools and Libraries"
+    sudo $DNF_CMD install -y \
+        git \
+        cmake \
+        meson \
+        ninja-build \
+        pkgconfig \
+        gcc-c++ \
+        wayland-devel \
+        wayland-protocols-devel \
+        libdrm-devel \
+        libxkbcommon-devel \
+        libinput-devel \
+        pixman-devel \
+        cairo-devel \
+        pango-devel
+fi
 
 # Install Hyprland and essential packages
 print_status "Installing Hyprland and core components..."
-sudo dnf install -y \
+sudo $DNF_CMD install -y \
     hyprland \
     hyprlock \
     hypridle \
@@ -94,7 +139,7 @@ sudo dnf install -y \
 
 # Install additional Wayland utilities
 print_status "Installing Wayland utilities..."
-sudo dnf install -y \
+sudo $DNF_CMD install -y \
     waybar \
     rofi-wayland \
     dunst \
@@ -114,7 +159,7 @@ sudo dnf install -y \
 
 # Install terminal and file manager
 print_status "Installing terminal and utilities..."
-sudo dnf install -y \
+sudo $DNF_CMD install -y \
     kitty \
     thunar \
     thunar-archive-plugin \
@@ -127,7 +172,7 @@ sudo dnf install -y \
 
 # Install fonts for aesthetics
 print_status "Installing fonts..."
-sudo dnf install -y \
+sudo $DNF_CMD install -y \
     fontawesome-fonts \
     fira-code-fonts \
     jetbrains-mono-fonts \
@@ -139,12 +184,12 @@ sudo dnf install -y \
 
 # Install Flatpak for additional applications
 print_status "Setting up Flatpak..."
-sudo dnf install -y flatpak
+sudo $DNF_CMD install -y flatpak
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 
 # Install additional tools from repositories
 print_status "Installing additional utilities..."
-sudo dnf install -y \
+sudo $DNF_CMD install -y \
     ImageMagick \
     jq \
     curl \
@@ -156,6 +201,10 @@ sudo dnf install -y \
     neofetch \
     ffmpeg \
     mpv
+
+# Install Go if needed for cliphist
+print_status "Installing Go for additional tools..."
+sudo $DNF_CMD install -y golang
 
 # Clone and build hyprshot (screenshot tool)
 print_status "Installing hyprshot..."
@@ -180,7 +229,7 @@ fi
 # Clone and build swww (wallpaper daemon)
 print_status "Installing swww..."
 if ! command -v swww &> /dev/null; then
-    sudo dnf install -y cargo rust
+    sudo $DNF_CMD install -y cargo rust
     cargo install swww
     # Add cargo bin to PATH if not already there
     if ! grep -q 'cargo/bin' ~/.bashrc; then
@@ -265,7 +314,7 @@ EOF
 
 # Install Papirus icon theme
 print_status "Installing Papirus icon theme..."
-sudo dnf install -y papirus-icon-theme 2>/dev/null || print_warning "Could not install Papirus icons"
+sudo $DNF_CMD install -y papirus-icon-theme 2>/dev/null || print_warning "Could not install Papirus icons"
 
 # Enable services
 print_status "Enabling services..."
@@ -319,5 +368,10 @@ if command -v getenforce &> /dev/null && [ "$(getenforce)" != "Disabled" ]; then
 fi
 
 print_status "✅ Installation complete!"
+echo ""
+echo "🎯 Key changes for DNF5 compatibility:"
+echo "   - Automatic detection of DNF vs DNF5"
+echo "   - Individual package installation instead of group install for DNF5"
+echo "   - Uses 'upgrade' instead of 'update' for DNF5"
 echo ""
 echo "🔄 Please reboot to complete the installation!"
